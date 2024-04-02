@@ -18,10 +18,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-add_filter( 'plugin_action_links_backend-block-visibility/backend-block-visibility.php', 'km_block_visibility_add_plugin_settings_link');
-add_action( 'admin_init', 'km_block_visibility_register_settings' );
-add_action( 'admin_menu', 'km_block_visibility_settings_page' );
-add_filter( 'allowed_block_types_all', 'km_block_visibility_remove_blocks', 10, 2 );
+if ( is_admin() ) { 
+    add_filter( 'plugin_action_links_backend-block-visibility/backend-block-visibility.php', 'km_block_visibility_add_plugin_settings_link');
+    add_filter( 'allowed_block_types_all', 'km_block_visibility_remove_blocks', 10, 2 );
+    add_action( 'admin_init', 'km_block_visibility_register_settings' );
+    add_action( 'admin_menu', 'km_block_visibility_settings_page' );
+}
 
 /**
  * Add settings link to the main plugin page
@@ -31,7 +33,7 @@ add_filter( 'allowed_block_types_all', 'km_block_visibility_remove_blocks', 10, 
  * @return array The list of plugin action links
  */
 function km_block_visibility_add_plugin_settings_link( $links ) {
-    $settings_link = '<a href="' . esc_url( admin_url( 'options-general.php?page=blocks_visibility' ) ) . '">' . _e( 'Settings', 'km-block-visibility' ) . '</a>';
+    $settings_link = '<a href="' . esc_url( admin_url( 'options-general.php?page=km_block_visibility' ) ) . '">' . __( 'Settings', 'km-block-visibility' ) . '</a>';
     array_unshift( $links, $settings_link );
     return $links;
 }
@@ -51,11 +53,11 @@ function km_block_visibility_register_settings() {
  * Add the "Block Visibility" options page under "Settings".
  */
 function km_block_visibility_settings_page() {
-    add_options_page( 'Block Visibility', 'Block Visibility', 'manage_options', 'blocks_visibility', 'km_block_visibility_callback' );
+    add_options_page( 'Block Visibility', 'Block Visibility', 'manage_options', 'km_block_visibility', 'km_block_visibility_callback' );
 }
 
 /**
- * Filters the list of allowed block types based on user capabilities.
+ * Filters the list of allowed block types based the block visibility settings.
  * 
  * @param array   $allowed_block_types array of block type slugs
  * @param object  $block_editor_context The current block editor context.
@@ -110,7 +112,7 @@ function km_block_visibility_callback() {
 /**
  * Custom sanitization callback function to ensure input is an array.
  *
- * @param array|bool $input Array of selected blocks.
+ * @param array  $input Array of selected blocks.
  *
  * @return array The sanitized list of selected blocks.
  */
