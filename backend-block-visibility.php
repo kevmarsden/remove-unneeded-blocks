@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       Backend Block Visibility
- * Description:       Hide unused blocks from the post editor
+ * Description:       Hide unneeded blocks from the post editor
  * Version:           1.0.0
  * Author:            Kevin Marsden
  * Author URI:        https://kmarsden.com

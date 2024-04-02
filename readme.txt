@@ -12,7 +12,7 @@ This plugin creates a settings page to manage the blocks that are displayed in p
 
 == Description ==
 
-This plugin creates a settings page to manage the blocks that are displayed in post editor.
+This plugin creates a settings page to manage the blocks that are displayed in post editor. Disabling blocks in the backend will not impact how they are rendered on the frontend and blocks in existing posts can still be edited. 
 
 == Screenshots ==
 
